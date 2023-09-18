@@ -16,8 +16,10 @@ public class Triangle {
         return this.a + this.b + this.c;
     }
 
-    public double area(){
-        double p = ((this.a + this.b + this.c) / 2);
-        return Math.sqrt(p * (p - this.a) * (p - this.b) * (p - this.c));
-   }
+    public double area() {
+        var p = new Triangle(this.a, this.b, this.c);
+        double p2 = p.perimeter();
+
+        return Math.sqrt((p2/2) * ((p2/2) - this.a) * ((p2/2) - this.b) * ((p2/2) - this.c));
+    }
 }
