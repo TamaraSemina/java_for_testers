@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: io.netty:netty-codec-http:4.1.92.Final" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.netty" artifactId="netty-codec-http" version="4.1.92.Final" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.92.Final/b91f907a19c6bfb318077951eb28a3dbee8f41fd/netty-codec-http-4.1.92.Final.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.92.Final/d8baa735b487df5b0bf466cb8c27939e77879edf/netty-codec-http-4.1.92.Final-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

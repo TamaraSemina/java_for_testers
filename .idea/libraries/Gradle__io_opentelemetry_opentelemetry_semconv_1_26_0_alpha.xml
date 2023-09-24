@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: io.opentelemetry:opentelemetry-semconv:1.26.0-alpha" type="java-imported" external-system-id="GRADLE">
+    <properties groupId="io.opentelemetry" artifactId="opentelemetry-semconv" version="1.26.0-alpha" />
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-semconv/1.26.0-alpha/1f4f963673f8209208f868666cd43e79b9a2dd15/opentelemetry-semconv-1.26.0-alpha.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.opentelemetry/opentelemetry-semconv/1.26.0-alpha/e758e958ed2c2c8a2ed7053ecaab1d4a4b3e0749/opentelemetry-semconv-1.26.0-alpha-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
