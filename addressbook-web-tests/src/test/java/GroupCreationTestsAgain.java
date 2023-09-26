@@ -7,7 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 public class GroupCreationTestsAgain {
-    private WebDriver driver;
+    private static WebDriver driver;
 
     @BeforeEach
     public void setUp() {
@@ -27,7 +27,7 @@ public class GroupCreationTestsAgain {
         driver.findElement(By.name("user")).sendKeys("admin");
         driver.findElement(By.name("pass")).click();
         driver.findElement(By.name("pass")).sendKeys("secret");
-        driver.findElement(By.cssSelector("input:nth-child(7)")).click();
+        driver.findElement(By.xpath("//input[@value=\'Login\']")).click();
         driver.findElement(By.linkText("groups")).click();
         driver.findElement(By.name("new")).click();
         driver.findElement(By.name("group_name")).click();
