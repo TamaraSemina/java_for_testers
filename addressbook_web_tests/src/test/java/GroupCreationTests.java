@@ -15,7 +15,7 @@ public class GroupCreationTests {
             driver = new FirefoxDriver();
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
             driver.get("http://localhost/addressbook/");
-            driver.manage().window().setSize(new Dimension(1054, 799));
+            driver.manage().window().setSize(new Dimension(1936, 1048));
             driver.findElement(By.name("user")).click();
             driver.findElement(By.name("user")).sendKeys("admin");
             driver.findElement(By.name("pass")).sendKeys("secret");
