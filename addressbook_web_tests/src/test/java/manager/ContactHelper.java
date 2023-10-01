@@ -12,7 +12,7 @@ public class ContactHelper extends HelperBase {
         openContactPage();
         fillContactForm(contact);
         submitContactCreation();
-        openHomePage();
+        returnToHomePage();
     }
 
     public void removeContact() {
@@ -20,7 +20,6 @@ public class ContactHelper extends HelperBase {
         selectContact();
         removeSelectedContact();
         acceptRemoval();
-        returnToHomePage();
     }
 
     public void openContactPage() {
