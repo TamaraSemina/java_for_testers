@@ -50,4 +50,9 @@ public class ContactHelper extends HelperBase {
     private void removeSelectedContact() {
         click(By.cssSelector(".left:nth-child(8) > input"));
     }
+
+    public boolean isContactPresent() {
+        openHomePage();
+        return manager.isElementPresent(By.name("selected[]"));
+    }
 }
