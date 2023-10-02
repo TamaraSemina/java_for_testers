@@ -7,7 +7,7 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void canCreateContact() {
-        app.contacts().createContact(new ContactData("Tamara", "Semina", "", "", ""));
+        app.contacts().createContact(new ContactData("Tamara", "Semina", "", "", "", "", ""));
     }
 
     @Test
@@ -18,5 +18,10 @@ public class ContactCreationTests extends TestBase {
     @Test
     public void canCreateContactWithMainParameters()    {
         app.contacts().createContact((new ContactData().withMainParameters("First Name Test", "Last Name Test", "ul. Lenina", "test@test.ru", "+79213334455")));
+    }
+
+    @Test
+    public void canCreateContactWithSomeParameters() {
+        app.contacts().createContact((new ContactData().withSomeParameters("namelast", "ul. Mira", "2@2.ru", "2322323")));
     }
 }
