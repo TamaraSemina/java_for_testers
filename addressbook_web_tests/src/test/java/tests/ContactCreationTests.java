@@ -1,9 +1,32 @@
 package tests;
 
 import model.ContactData;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
 
 public class ContactCreationTests extends TestBase {
+
+    public static List<ContactData> negativeContactCreation() {
+        var result = new ArrayList<ContactData>(List.of(
+                new ContactData("Imya'", "", "", "", "", "", "")));
+        return result;
+    }
+
+    @ParameterizedTest
+    @MethodSource("negativeContactCreation")
+    public void canNotCreateContact(ContactData contact) {
+        int contactCount = app.contacts().getCount();
+        app.contacts().createContact(contact);
+        int newContactCount = app.contacts().getCount();
+        Assertions.assertEquals(contactCount, newContactCount);
+    }
 
     @Test
     public void canCreateContact() {
