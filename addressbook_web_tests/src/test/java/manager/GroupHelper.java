@@ -84,15 +84,15 @@ public class GroupHelper extends HelperBase {
         click(By.name("selected[]"));
     }
 
-    public int getCount() {
-        openGroupsPage();
-        return manager.driver.findElements(By.name("selected[]")).size();
-    }
-
     private void selectAllGroups() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
         for (var checkbox : checkboxes) {
             checkbox.click();
         }
+    }
+
+    public int getCount() {
+        openGroupsPage();
+        return manager.driver.findElements(By.name("selected[]")).size();
     }
 }
