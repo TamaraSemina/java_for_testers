@@ -35,6 +35,12 @@ public class GroupHelper extends HelperBase {
         returnToGroupsPage();
     }
 
+    public void removeAllGroups() {
+        openGroupsPage();
+        selectAllGroups();
+        removeSelectedGroups();
+    }
+
     public void modifyGroup(GroupData modifiedGroup) {
         openGroupsPage();
         selectGroup();
@@ -42,12 +48,6 @@ public class GroupHelper extends HelperBase {
         fillGroupForm(modifiedGroup);
         submitGroupModification();
         returnToGroupsPage();
-    }
-
-    public void removeAllGroups() {
-        openGroupsPage();
-        selectAllGroups();
-        removeSelectedGroups();
     }
 
     private void submitGroupCreation() {
