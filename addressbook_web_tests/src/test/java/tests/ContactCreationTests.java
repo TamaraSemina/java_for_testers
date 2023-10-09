@@ -2,14 +2,11 @@ package tests;
 
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Stream;
 
 public class ContactCreationTests extends TestBase {
 
@@ -28,23 +25,91 @@ public class ContactCreationTests extends TestBase {
         Assertions.assertEquals(contactCount, newContactCount);
     }
 
-    @Test
-    public void canCreateContact() {
-        app.contacts().createContact(new ContactData("Tamara", "Semina", "", "", "", "", ""));
+    public static List<ContactData> contactProvider() {
+        var result = new ArrayList<ContactData>();
+        for (var firstname : List.of("", "firstname")) {
+            for (var lastname : List.of("", "lastname")) {
+                for (var address : List.of("", "address")) {
+                    for (var email : List.of("", "email1")) {
+                        for (var mobile : List.of("", "mobilephone")) {
+                            for (var email2 : List.of ("", "email2")) {
+                                for (var home : List.of("", "homephone")) {
+                                    result.add(new ContactData(firstname, lastname, address, email, mobile, email2, home));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+        }
+        return result;
     }
 
-    @Test
-    public void canCreateContactWithFirstName()     {
-        app.contacts().createContact((new ContactData().withFirstName("First Name Test")));
+    @ParameterizedTest
+    @MethodSource("contactProvider")
+    public void canCreateContact(ContactData contact) {
+        int countContact = app.contacts().getCount();
+        app.contacts().createContact(contact);
+        int newCountContact = app.contacts().getCount();
+        Assertions.assertEquals(countContact + 1, newCountContact);
     }
 
-    @Test
-    public void canCreateContactWithMainParameters()    {
-        app.contacts().createContact((new ContactData().withMainParameters("First Name Test", "Last Name Test", "ul. Lenina", "test@test.ru", "+79213334455")));
+    public static List<ContactData> contactProviderWithSomeStaticParameter() {
+        var firstname = new ContactData("Tamara", "", "", "", "", "", "" );
+        var address = new ContactData("", "", "ul. Lenina", "", "", "", "" );
+        var mobile = new ContactData("", "", "", "", "+79213434455", "", "" );
+        var email2 = new ContactData("", "", "", "", "", "2@2.ru", "" );
+        var result = new ArrayList<ContactData>();
+        for (var lastname : List.of("", "lastname")) {
+            for (var email : List.of("", "email@1.ru")) {
+                    for (var home : List.of("", "2323322")) {
+                        result.add(new ContactData(firstname.firstname(), lastname, address.address(), email, mobile.mobile(), email2.email2(), home));
+                    }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+        }
+        return result;
     }
 
-    @Test
-    public void canCreateContactWithSomeParameters() {
-        app.contacts().createContact((new ContactData().withSomeParameters("namelast", "ul. Mira", "2@2.ru", "2322323")));
+    @ParameterizedTest
+    @MethodSource("contactProviderWithSomeStaticParameter")
+    public void canCreateContactWithSomeStaticParameter(ContactData contact) {
+        int countContact = app.contacts().getCount();
+        app.contacts().createContact(contact);
+        int newCountContact = app.contacts().getCount();
+        Assertions.assertEquals(countContact + 1, newCountContact);
+    }
+
+    public static List<ContactData> contactProviderWithSomeStaticParameter2() {
+        var lastname = new ContactData("", "Semina", "", "", "", "", "" );
+        var email = new ContactData("", "", "", "", "", "2@2.ru", "" );
+        var home = new ContactData("", "", "", "", "", "", "6567788" );
+        var result = new ArrayList<ContactData>();
+        for (var firstname : List.of("", "firstname")) {
+            for (var address : List.of("", "address")) {
+                for (var email2 : List.of("", "2@2.ru")) {
+                    for (var mobile : List.of("", "+79212323322")) {
+                        result.add(new ContactData(firstname, lastname.lastname(), address, email.email(), mobile, email2, home.home()));
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < 5; i++) {
+            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+        }
+        return result;
+    }
+    @ParameterizedTest
+    @MethodSource("contactProviderWithSomeStaticParameter2")
+    public void canCreateContactWithSomeStaticParameter2(ContactData contact) {
+        int countContact = app.contacts().getCount();
+        app.contacts().createContact(contact);
+        int newCountContact = app.contacts().getCount();
+        Assertions.assertEquals(countContact + 1, newCountContact);
     }
 }
