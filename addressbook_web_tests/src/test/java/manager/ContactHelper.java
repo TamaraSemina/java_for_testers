@@ -1,7 +1,11 @@
 package manager;
 
 import model.ContactData;
+import model.GroupData;
 import org.openqa.selenium.By;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
     public ContactHelper(ApplicationManager manager) {
@@ -15,11 +19,12 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public void removeContact() {
+    public void removeContact(ContactData contact) {
         openHomePage();
-        selectContact();
+        selectContact(contact);
         removeSelectedContact();
         acceptRemoval();
+        openHomePage();
     }
 
     public void removeAllContact() {
@@ -56,8 +61,8 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("home page"));
     }
 
-    private void selectContact() {
-        click(By.name("selected[]"));
+    private void selectContact(ContactData contact) {
+        click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
     private void selectAllContact() {
@@ -68,7 +73,8 @@ public class ContactHelper extends HelperBase {
     }
 
     private void removeSelectedContact() {
-        click(By.cssSelector(".left:nth-child(8) > input"));
+//        click(By.cssSelector(".left:nth-child(8) > input"));
+        click(By.xpath("//input[@value='Delete']"));
     }
 
     public boolean isContactPresent() {
@@ -79,5 +85,45 @@ public class ContactHelper extends HelperBase {
     public int getCount() {
         openHomePage();
         return manager.driver.findElements(By.name("selected[]")).size();
+    }
+
+
+//    public List<ContactData> getList() {
+//        openHomePage();
+//        var contacts = new ArrayList<ContactData>();
+//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
+//        for (var test : trs) {
+//             var name = test.findElement(By.xpath("//td[3]")).getText();
+//             //var checkbox = test.findElement(By.name("selected[]"));
+//                var id = test.getAttribute("id");
+//                contacts.add(new ContactData().withId(id).withFirstName(name));
+//       }
+//       return contacts;
+//    }
+
+//    public List<ContactData> getList() {
+//        openHomePage();
+//        var contacts = new ArrayList<ContactData>();
+//        var tds = manager.driver.findElements(By.cssSelector("td.center"));
+//        for (var test : tds) {
+//            var name = test.getText();
+//            var checkbox = test.findElement(By.name("selected[]"));
+//            var id = checkbox.getAttribute("value");
+//            contacts.add(new ContactData().withId(id).withFirstName(name));
+//        }
+//        return contacts;
+//    }
+
+        public List<ContactData> getList() {
+        openHomePage();
+        var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
+        for (var test : trs) {
+            var name = test.getText();
+            var checkbox = test.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData().withId(id).withFirstName(name));
+        }
+        return contacts;
     }
 }

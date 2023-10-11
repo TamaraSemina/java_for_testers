@@ -12,7 +12,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactCreation() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("Imya'", "", "", "", "", "", "")));
+                new ContactData("", "Imya'", "", "", "", "", "", "")));
         return result;
     }
 
@@ -34,7 +34,7 @@ public class ContactCreationTests extends TestBase {
                         for (var mobile : List.of("", "mobilephone")) {
                             for (var email2 : List.of ("", "email2")) {
                                 for (var home : List.of("", "homephone")) {
-                                    result.add(new ContactData(firstname, lastname, address, email, mobile, email2, home));
+                                    result.add(new ContactData("", firstname, lastname, address, email, mobile, email2, home));
                                 }
                             }
                         }
@@ -43,7 +43,7 @@ public class ContactCreationTests extends TestBase {
             }
         }
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
         }
         return result;
     }
@@ -58,20 +58,20 @@ public class ContactCreationTests extends TestBase {
     }
 
     public static List<ContactData> contactProviderWithSomeStaticParameter() {
-        var firstname = new ContactData("Tamara", "", "", "", "", "", "" );
-        var address = new ContactData("", "", "ul. Lenina", "", "", "", "" );
-        var mobile = new ContactData("", "", "", "", "+79213434455", "", "" );
-        var email2 = new ContactData("", "", "", "", "", "2@2.ru", "" );
+        var firstname = new ContactData("", "Tamara", "", "", "", "", "", "" );
+        var address = new ContactData("", "", "", "ul. Lenina", "", "", "", "" );
+        var mobile = new ContactData("", "", "", "", "", "+79213434455", "", "" );
+        var email2 = new ContactData("", "", "", "", "", "", "2@2.ru", "" );
         var result = new ArrayList<ContactData>();
         for (var lastname : List.of("", "lastname")) {
             for (var email : List.of("", "email@1.ru")) {
                     for (var home : List.of("", "2323322")) {
-                        result.add(new ContactData(firstname.firstname(), lastname, address.address(), email, mobile.mobile(), email2.email2(), home));
+                        result.add(new ContactData("", firstname.firstname(), lastname, address.address(), email, mobile.mobile(), email2.email2(), home));
                     }
             }
         }
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
         }
         return result;
     }
@@ -86,21 +86,21 @@ public class ContactCreationTests extends TestBase {
     }
 
     public static List<ContactData> contactProviderWithSomeStaticParameter2() {
-        var lastname = new ContactData("", "Semina", "", "", "", "", "" );
-        var email = new ContactData("", "", "", "", "", "2@2.ru", "" );
-        var home = new ContactData("", "", "", "", "", "", "6567788" );
+        var lastname = new ContactData("", "", "Semina", "", "", "", "", "" );
+        var email = new ContactData("", "", "", "", "", "", "2@2.ru", "" );
+        var home = new ContactData("", "", "", "", "", "", "", "6567788" );
         var result = new ArrayList<ContactData>();
         for (var firstname : List.of("", "firstname")) {
             for (var address : List.of("", "address")) {
                 for (var email2 : List.of("", "2@2.ru")) {
                     for (var mobile : List.of("", "+79212323322")) {
-                        result.add(new ContactData(firstname, lastname.lastname(), address, email.email(), mobile, email2, home.home()));
+                        result.add(new ContactData("", firstname, lastname.lastname(), address, email.email(), mobile, email2, home.home()));
                     }
                 }
             }
         }
         for (int i = 0; i < 5; i++) {
-            result.add(new ContactData(randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
+            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
         }
         return result;
     }
