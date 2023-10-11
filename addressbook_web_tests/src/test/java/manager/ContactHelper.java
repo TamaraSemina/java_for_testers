@@ -113,16 +113,29 @@ public class ContactHelper extends HelperBase {
 //        }
 //        return contacts;
 //    }
+//
+//        public List<ContactData> getList() {
+//        openHomePage();
+//        var contacts = new ArrayList<ContactData>();
+//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
+//        for (var test : trs) {
+//            var name = test.getText();
+//            var checkbox = test.findElement(By.name("selected[]"));
+//            var id = checkbox.getAttribute("value");
+//            contacts.add(new ContactData().withId(id).withFirstName(name));
+//        }
+//        return contacts;
+//    }
 
-        public List<ContactData> getList() {
+    public List<ContactData> getList() {
         openHomePage();
         var contacts = new ArrayList<ContactData>();
-        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
+        var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
         for (var test : trs) {
-            var name = test.getText();
             var checkbox = test.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
-            contacts.add(new ContactData().withId(id).withFirstName(name));
+            var firstname = test.findElement(By.xpath("td[3]")).getText();
+            contacts.add(new ContactData().withId(id).withFirstName(firstname));
         }
         return contacts;
     }
