@@ -49,6 +49,15 @@ public class ContactHelper extends HelperBase {
         type(By.name("home"), contact.home());
     }
 
+    public void modifyContact(ContactData contact, ContactData modifiedContact) {
+        openHomePage();
+        selectContact(contact);
+        initContactModification();
+        fillContactForm(modifiedContact);
+        submitContactModification();
+        returnToHomePage();
+    }
+
     private void submitContactCreation() {
         click(By.cssSelector("input:nth-child(87)"));
     }
@@ -82,50 +91,18 @@ public class ContactHelper extends HelperBase {
         return manager.isElementPresent(By.name("selected[]"));
     }
 
+    private void submitContactModification() {
+        manager.driver.findElement(By.name("update")).click();
+    }
+
+    private void initContactModification() {
+        manager.driver.findElement(By.xpath("//img[@alt='Edit']")).click();
+    }
+
     public int getCount() {
         openHomePage();
         return manager.driver.findElements(By.name("selected[]")).size();
     }
-
-
-//    public List<ContactData> getList() {
-//        openHomePage();
-//        var contacts = new ArrayList<ContactData>();
-//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
-//        for (var test : trs) {
-//             var name = test.findElement(By.xpath("//td[3]")).getText();
-//             //var checkbox = test.findElement(By.name("selected[]"));
-//                var id = test.getAttribute("id");
-//                contacts.add(new ContactData().withId(id).withFirstName(name));
-//       }
-//       return contacts;
-//    }
-
-//    public List<ContactData> getList() {
-//        openHomePage();
-//        var contacts = new ArrayList<ContactData>();
-//        var tds = manager.driver.findElements(By.cssSelector("td.center"));
-//        for (var test : tds) {
-//            var name = test.getText();
-//            var checkbox = test.findElement(By.name("selected[]"));
-//            var id = checkbox.getAttribute("value");
-//            contacts.add(new ContactData().withId(id).withFirstName(name));
-//        }
-//        return contacts;
-//    }
-//
-//        public List<ContactData> getList() {
-//        openHomePage();
-//        var contacts = new ArrayList<ContactData>();
-//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
-//        for (var test : trs) {
-//            var name = test.getText();
-//            var checkbox = test.findElement(By.name("selected[]"));
-//            var id = checkbox.getAttribute("value");
-//            contacts.add(new ContactData().withId(id).withFirstName(name));
-//        }
-//        return contacts;
-//    }
 
     public List<ContactData> getList() {
         openHomePage();
@@ -139,4 +116,17 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+
+    //        public List<ContactData> getList() {
+//        openHomePage();
+//        var contacts = new ArrayList<ContactData>();
+//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
+//        for (var test : trs) {
+//            var name = test.getText();
+//            var checkbox = test.findElement(By.name("selected[]"));
+//            var id = checkbox.getAttribute("value");
+//            contacts.add(new ContactData().withId(id).withFirstName(name));
+//        }
+//        return contacts;
+//    }
 }
