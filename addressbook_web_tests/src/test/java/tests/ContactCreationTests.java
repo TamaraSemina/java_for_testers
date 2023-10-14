@@ -1,7 +1,6 @@
 package tests;
 
 import model.ContactData;
-import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -52,38 +51,26 @@ public class ContactCreationTests extends TestBase {
         };
         newContacts.sort(compareById);
         var expectedList = new ArrayList<>(oldContacts);
-        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withLastName("").withAddress(""));
+        expectedList.add(contact.withId(newContacts.get(newContacts.size() - 1).id()).withAddress("").withPhoto("src/test/resources/images/avatar.jpg"));
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
 
-//    public static List<ContactData> contactProviderWithSomeStaticParameter() {
-//        var firstname = new ContactData("", "Tamara", "", "", "", "", "", "","");
-//        var address = new ContactData("", "", "", "ul. Lenina", "", "", "", "","");
-//        var mobile = new ContactData("", "", "", "", "", "+79213434455", "", "","");
-//        var email2 = new ContactData("", "", "", "", "", "", "2@2.ru", "","");
-//        var result = new ArrayList<ContactData>();
-//        for (var lastname : List.of("", "lastname")) {
-//            for (var email : List.of("", "email@1.ru")) {
-//                for (var home : List.of("", "2323322")) {
-//                    result.add(new ContactData("", firstname.firstname(), lastname, address.address(), email, mobile.mobile(), email2.email2(), home));
-//                }
-//            }
-//        }
-//        for (int i = 0; i < 5; i++) {
-//            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
-//        }
-//        return result;
-//    }
+    @ParameterizedTest
+    @MethodSource("negativeContactProvider")
+    public void canNotCreateContact(ContactData contact) {
+        int contactCount = app.contacts().getCount();
+        app.contacts().createContact(contact);
+        int newContactCount = app.contacts().getCount();
+        Assertions.assertEquals(contactCount, newContactCount);
+    }
 
-//    @ParameterizedTest
-//    @MethodSource("contactProviderWithSomeStaticParameter")
-//    public void canCreateContactWithSomeStaticParameter(ContactData contact) {
-//        int countContact = app.contacts().getCount();
-//        app.contacts().createContact(contact);
-//        int newCountContact = app.contacts().getCount();
-//        Assertions.assertEquals(countContact + 1, newCountContact);
-//    }
+    public static List<ContactData> negativeContactProvider() {
+        var result = new ArrayList<ContactData>(List.of(
+                new ContactData("", "Imya'", "", "", "src/test/resources/images/avatar.jpg")));
+        return result;
+    }
+
 
 //    public static List<ContactData> contactProviderWithSomeStaticParameter2() {
 //        var lastname = new ContactData("", "", "Semina", "", "", "", "", "");
@@ -113,18 +100,4 @@ public class ContactCreationTests extends TestBase {
 //        int newCountContact = app.contacts().getCount();
 //        Assertions.assertEquals(countContact + 1, newCountContact);
 //    }
-
-    @ParameterizedTest
-    @MethodSource("negativeContactCreation")
-    public void canNotCreateContact(ContactData contact) {
-        int contactCount = app.contacts().getCount();
-        app.contacts().createContact(contact);
-        int newContactCount = app.contacts().getCount();
-        Assertions.assertEquals(contactCount, newContactCount);
-    }
-    public static List<ContactData> negativeContactCreation() {
-        var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "Imya'", "", "", "", "", "", "","")));
-        return result;
-    }
 }

@@ -1,7 +1,6 @@
 package manager;
 
 import model.ContactData;
-import model.GroupData;
 import org.openqa.selenium.By;
 
 import java.util.ArrayList;
@@ -43,11 +42,6 @@ public class ContactHelper extends HelperBase {
         type(By.name("firstname"), contact.firstname());
         type(By.name("lastname"), contact.lastname());
         type(By.name("address"), contact.address());
-        type(By.name("email"), contact.email());
-        type(By.name("email2"), contact.email2());
-        type(By.name("mobile"), contact.mobile());
-        type(By.name("home"), contact.home());
-        type(By.name("home"), contact.home());
         attach(By.name("photo"), contact.photo());
     }
 
@@ -113,7 +107,8 @@ public class ContactHelper extends HelperBase {
             var checkbox = test.findElement(By.name("selected[]"));
             var id = checkbox.getAttribute("value");
             var firstname = test.findElement(By.xpath("td[3]")).getText();
-            contacts.add(new ContactData().withId(id).withFirstName(firstname));
+            var lastname = test.findElement(By.xpath("td[2]")).getText();
+            contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname));
         }
         return contacts;
     }
