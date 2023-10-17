@@ -1,5 +1,8 @@
 package tests;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunction;
 import model.ContactData;
 import org.junit.jupiter.api.Assertions;
@@ -7,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,21 +30,32 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
     }
 
-    public static List<ContactData> contactProvider() {
+    public static List<ContactData> contactProvider() throws IOException {
         var result = new ArrayList<ContactData>();
-        for (var firstname : List.of("", "firstname")) {
-            for (var lastname : List.of("", "lastname")) {
-                for (var address : List.of("", "address")) {
-                    result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withAddress(address));
-                }
-            }
-        }
-        for (int i = 0; i < 5; i++) {
-            result.add(new ContactData()
-                    .withFirstName(CommonFunction.randomString(i * 10))
-                    .withLastName(CommonFunction.randomString(i * 10))
-                    .withAddress(CommonFunction.randomString(i * 10)));
-        }
+//        for (var firstname : List.of("", "firstname")) {
+//            for (var lastname : List.of("", "lastname")) {
+//                for (var address : List.of("", "address")) {
+//                    result.add(new ContactData().withFirstName(firstname).withLastName(lastname).withAddress(address));
+//                }
+//            }
+//        }
+//        for (int i = 0; i < 5; i++) {
+//            result.add(new ContactData()
+//                    .withFirstName(CommonFunction.randomString(i * 10))
+//                    .withLastName(CommonFunction.randomString(i * 10))
+//                    .withAddress(CommonFunction.randomString(i * 10)));
+//        }
+
+        /* Для xml формата */
+//        var mapper = new XmlMapper();
+//        var value = mapper.readValue(new File("contacts.xml"), new TypeReference<List<ContactData>>() {});
+
+        /* Для json формата */
+        var json = Files.readString(Paths.get("contacts.json"));
+        ObjectMapper mapper =  new ObjectMapper();
+        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {});
+
+        result.addAll(value);
         return result;
     }
 
@@ -71,34 +89,4 @@ public class ContactCreationTests extends TestBase {
                 new ContactData("", "Imya'", "", "", "src/test/resources/images/avatar.jpg")));
         return result;
     }
-
-
-//    public static List<ContactData> contactProviderWithSomeStaticParameter2() {
-//        var lastname = new ContactData("", "", "Semina", "", "", "", "", "");
-//        var email = new ContactData("", "", "", "", "", "", "2@2.ru", "");
-//        var home = new ContactData("", "", "", "", "", "", "", "6567788");
-//        var result = new ArrayList<ContactData>();
-//        for (var firstname : List.of("", "firstname")) {
-//            for (var address : List.of("", "address")) {
-//                for (var email2 : List.of("", "2@2.ru")) {
-//                    for (var mobile : List.of("", "+79212323322")) {
-//                        result.add(new ContactData("", firstname, lastname.lastname(), address, email.email(), mobile, email2, home.home()));
-//                    }
-//                }
-//            }
-//        }
-//        for (int i = 0; i < 5; i++) {
-//            result.add(new ContactData("", randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10), randomString(i * 10)));
-//        }
-//        return result;
-//    }
-
-//    @ParameterizedTest
-//    @MethodSource("contactProviderWithSomeStaticParameter2")
-//    public void canCreateContactWithSomeStaticParameter2(ContactData contact) {
-//        int countContact = app.contacts().getCount();
-//        app.contacts().createContact(contact);
-//        int newCountContact = app.contacts().getCount();
-//        Assertions.assertEquals(countContact + 1, newCountContact);
-//    }
 }

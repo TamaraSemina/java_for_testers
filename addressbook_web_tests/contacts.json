@@ -1,0 +1,19 @@
+[ {
+  "id" : "",
+  "firstname" : "",
+  "lastname" : "",
+  "address" : "",
+  "photo" : "src/test/resources/images/avatar.jpg"
+}, {
+  "id" : "",
+  "firstname" : "wlbhnmdsqu",
+  "lastname" : "kfauohcrou",
+  "address" : "mdypoawbbe",
+  "photo" : "src/test/resources/images/avatar.jpg"
+}, {
+  "id" : "",
+  "firstname" : "jeabyqmimkvsxbqsarwv",
+  "lastname" : "rgvrmkahytitvikdcbxo",
+  "address" : "vqirwtbtazmdyvjgxcwg",
+  "photo" : "src/test/resources/images/avatar.jpg"
+} ]
