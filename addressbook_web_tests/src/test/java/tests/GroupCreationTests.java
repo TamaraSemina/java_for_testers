@@ -3,6 +3,7 @@ package tests;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import common.CommonFunction;
 import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -75,11 +76,40 @@ public class GroupCreationTests extends TestBase {
         Assertions.assertEquals(newGroups, expectedList);
     }
 
+    public static List<GroupData> singleRandomGroup() {
+        return List.of(new GroupData()
+                .withName(CommonFunction.randomString( 10))
+                .withHeader(CommonFunction.randomString(20))
+                .withFooter(CommonFunction.randomString(30)));
+    }
+
+    @ParameterizedTest
+    @MethodSource("singleRandomGroup")
+    public void canCreateGroup(GroupData group) {
+        var oldGroups = app.jdbc().getGroupList();
+        app.groups().createGroup(group);
+        var newGroups = app.jdbc().getGroupList();
+        Comparator<GroupData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newGroups.sort(compareById);
+        var maxId = newGroups.get(newGroups.size() - 1).id();
+
+        var expectedList = new ArrayList<>(oldGroups);
+        expectedList.add(group.withId(maxId));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newGroups, expectedList);           
+    }
+
+
+
+
     public static List<GroupData> negativeGroupProvider() {
         var result = new ArrayList<GroupData>(List.of(
                 new GroupData("", "group name'", "", "")));
         return result;
     }
+
     @ParameterizedTest
     @MethodSource("negativeGroupProvider")
     public void canNotCreateGroup(GroupData group) {
