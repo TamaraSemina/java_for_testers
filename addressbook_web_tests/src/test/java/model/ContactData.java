@@ -25,8 +25,4 @@ public record ContactData(String id, String firstname, String lastname, String a
     public ContactData withPhoto(String photo) {
         return new ContactData(this.id, this.firstname, this.lastname, this.address, photo);
     }
-
-//    public ContactData withMainParameters(String firstname, String lastname, String address) {
-//        return new ContactData(this.id, firstname, lastname, address, this.photo);
-//    }
 }
