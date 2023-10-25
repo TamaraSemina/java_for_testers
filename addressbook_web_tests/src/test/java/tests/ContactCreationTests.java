@@ -54,9 +54,9 @@ public class ContactCreationTests extends TestBase {
     @ParameterizedTest
     @MethodSource("contactProvider")
     public void canCreateContact(ContactData contact) {
-        var oldContacts = app.hbm().getContactList();
+        var oldContacts = app.contacts().getList();
         app.contacts().createContact(contact);
-        var newContacts = app.hbm().getContactList();
+        var newContacts = app.contacts().getList();
         Comparator<ContactData> compareById = (o1, o2) -> {
             return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
         };
@@ -66,6 +66,31 @@ public class ContactCreationTests extends TestBase {
         expectedList.sort(compareById);
         Assertions.assertEquals(newContacts, expectedList);
     }
+
+    public static List<ContactData> singleRandomContact() {
+        return List.of(new ContactData()
+                .withFirstName(CommonFunction.randomString( 10))
+                .withLastName(CommonFunction.randomString(20))
+                .withAddress(CommonFunction.randomString(30)));
+    }
+    @ParameterizedTest
+    @MethodSource("singleRandomContact")
+    public void canCreateSingleContact(ContactData contact) {
+        var oldContact = app.hbm().getContactList();
+        app.contacts().createContact(contact);
+        var newContacts = app.hbm().getContactList();
+        Comparator<ContactData> compareById = (o1, o2) -> {
+            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
+        };
+        newContacts.sort(compareById);
+        var maxId = newContacts.get(newContacts.size() - 1).id();
+
+        var expectedList = new ArrayList<>(oldContact);
+        expectedList.add(contact.withId(maxId));
+        expectedList.sort(compareById);
+        Assertions.assertEquals(newContacts, expectedList);
+    }
+
 
     @Test
     void canCreateContactWithPhoto() {
