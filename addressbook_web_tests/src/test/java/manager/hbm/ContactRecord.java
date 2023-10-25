@@ -47,9 +47,9 @@ public class ContactRecord {
     @Column(name = "id")
     public int id;
     @Column(name = "firstname")
-    public String first_name;
+    public String firstname;
     @Column(name = "lastname")
-    public String last_name;
+    public String lastname;
     @Column(name = "address")
     public String address;
 
@@ -57,8 +57,8 @@ public class ContactRecord {
 
     public ContactRecord(int id, String firstname, String lastname, String address, String photo) {
         this.id = id;
-        this.first_name = firstname;
-        this.last_name = lastname;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.address = address;
         this.photo = photo;
     }

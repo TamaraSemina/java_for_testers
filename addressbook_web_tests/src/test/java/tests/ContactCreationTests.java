@@ -101,6 +101,24 @@ public class ContactCreationTests extends TestBase {
         app.contacts().createContact(contact);
     }
 
+    @Test
+    void canCreateContactInGroup() {
+        var contact = new ContactData()
+                .withFirstName(CommonFunction.randomString(10))
+                .withLastName(CommonFunction.randomString(10))
+                .withPhoto(randomFile("src/test/resources/images"));
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+        }
+        var group = app.hbm().getGroupList().get(0);
+
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().createContact(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size() + 1, newRelated.size());
+    }
+
     @ParameterizedTest
     @MethodSource("negativeContactProvider")
     public void canNotCreateContact(ContactData contact) {

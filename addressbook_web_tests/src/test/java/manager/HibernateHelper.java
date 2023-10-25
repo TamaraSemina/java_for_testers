@@ -21,7 +21,7 @@ public class HibernateHelper extends HelperBase {
 //                        .addAnnotatedClass(Book.class)
                         .addAnnotatedClass(GroupRecord.class)
                         .addAnnotatedClass(ContactRecord.class)
-                        .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook")
+                        .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
                         .setProperty(AvailableSettings.USER, "root")
                         .setProperty(AvailableSettings.PASS, "")
                         .buildSessionFactory();
@@ -77,12 +77,12 @@ public class HibernateHelper extends HelperBase {
 
     private static ContactData convert(ContactRecord record) {
         return new ContactData().withId("" + record.id)
-                .withFirstName(record.first_name)
-                .withLastName(record.last_name)
+                .withFirstName(record.firstname)
+                .withLastName(record.lastname)
                 .withAddress(record.address);
     }
 
-    private static ContactRecord convert(ContactData contact) {
+    private static ContactRecord convertContact(ContactData contact) {
         var id = contact.id();
         if ("".equals(id)) {
             id = "0";
@@ -105,8 +105,14 @@ public class HibernateHelper extends HelperBase {
     public void createContact(ContactData contactData) { /* Zapros k baze dannih, kotoriy sozdaet noviy object */
         sessionFactory.inSession(session -> {
             session.getTransaction().begin();
-            session.persist(convert(contactData));
+            session.persist(convertContact(contactData));
             session.getTransaction().commit();
+        });
+    }
+
+    public List<ContactData> getContactsInGroup(GroupData group) {
+        return sessionFactory.fromSession(session -> {
+            return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
         });
     }
 }
