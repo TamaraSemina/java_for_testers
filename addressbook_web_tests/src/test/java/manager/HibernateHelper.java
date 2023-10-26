@@ -1,5 +1,6 @@
 package manager;
 
+import manager.hbm.ContactInGroupRecord;
 import manager.hbm.ContactRecord;
 import manager.hbm.GroupRecord;
 import model.ContactData;
@@ -18,12 +19,13 @@ public class HibernateHelper extends HelperBase {
     public HibernateHelper(ApplicationManager manager) {
         super(manager);
         sessionFactory = new Configuration()
-                        .addAnnotatedClass(GroupRecord.class)
-                        .addAnnotatedClass(ContactRecord.class)
-                        .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
-                        .setProperty(AvailableSettings.USER, "root")
-                        .setProperty(AvailableSettings.PASS, "")
-                        .buildSessionFactory();
+                .addAnnotatedClass(GroupRecord.class)
+                .addAnnotatedClass(ContactRecord.class)
+                .addAnnotatedClass(ContactInGroupRecord.class)
+                .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
+                .setProperty(AvailableSettings.USER, "root")
+                .setProperty(AvailableSettings.PASS, "")
+                .buildSessionFactory();
     }
 
     static List<GroupData> convertCroupList(List<GroupRecord> records) {
@@ -112,6 +114,12 @@ public class HibernateHelper extends HelperBase {
     public List<ContactData> getContactsInGroup(GroupData group) {
         return sessionFactory.fromSession(session -> {
             return convertContactList(session.get(GroupRecord.class, group.id()).contacts);
+        });
+    }
+
+    public long getCountContactsInGroup() {
+        return sessionFactory.fromSession(session -> {
+            return session.createQuery("select count (*) from ContactInGroupRecord", Long.class).getSingleResult();
         });
     }
 }

@@ -14,7 +14,7 @@ public class ContactRemovalTests extends TestBase {
     @Test
     public void canRemoveContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Imya", "Familia", "","src/test/resources/images/avatar.jpg"));
+            app.hbm().createContact(new ContactData("", "Imya", "Familia", "", "src/test/resources/images/avatar.jpg"));
         }
         var oldContacts = app.hbm().getContactList();
         var rnd = new Random();
@@ -30,8 +30,8 @@ public class ContactRemovalTests extends TestBase {
     @Test
     public void canAllRemoveContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Imya", "Familia", "","src/test/resources/images/avatar.jpg"));
-            app.hbm().createContact(new ContactData("", "Tamara", "Semina", "","src/test/resources/images/avatar.jpg"));
+            app.hbm().createContact(new ContactData("", "Imya", "Familia", "", "src/test/resources/images/avatar.jpg"));
+            app.hbm().createContact(new ContactData("", "Tamara", "Semina", "", "src/test/resources/images/avatar.jpg"));
         }
         app.contacts().removeAllContact();
         Assertions.assertEquals(0, app.contacts().getCount());
@@ -54,9 +54,10 @@ public class ContactRemovalTests extends TestBase {
         var group = app.hbm().getGroupList().get(0);
         var contact = app.hbm().getContactList().get(0);
 
-//        if (app.hbm().getContactsInGroup(group) == null) {
-//            app.contacts().addContactToGroup(contact, group);
-//        }
+        if (app.hbm().getCountContactsInGroup() == 0) {
+            app.contacts().addContactToGroup(contact, group);
+        }
+
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contacts().removeContactFromGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);

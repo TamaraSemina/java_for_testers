@@ -2,7 +2,6 @@ package tests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import common.CommonFunction;
 import model.ContactData;
 import model.GroupData;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -44,8 +42,9 @@ public class ContactCreationTests extends TestBase {
 
         /* Для json формата */
         var json = Files.readString(Paths.get("contacts.json"));
-        ObjectMapper mapper =  new ObjectMapper();
-        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {});
+        ObjectMapper mapper = new ObjectMapper();
+        var value = mapper.readValue(json, new TypeReference<List<ContactData>>() {
+        });
 
         result.addAll(value);
         return result;
@@ -69,10 +68,11 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> singleRandomContact() {
         return List.of(new ContactData()
-                .withFirstName(CommonFunction.randomString( 10))
+                .withFirstName(CommonFunction.randomString(10))
                 .withLastName(CommonFunction.randomString(20))
                 .withAddress(CommonFunction.randomString(30)));
     }
+
     @ParameterizedTest
     @MethodSource("singleRandomContact")
     public void canCreateSingleContact(ContactData contact) {
