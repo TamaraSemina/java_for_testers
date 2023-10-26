@@ -2,6 +2,7 @@ package manager.hbm;
 
 import jakarta.persistence.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -18,7 +19,7 @@ public class GroupRecord {
     @Column(name = "group_footer")
     public String footer;
 
-
+    public Date deprecated = new Date(); /*prisvoenie tekushego znachenia*/
 
     @ManyToMany
     @JoinTable (name = "address_in_groups",
