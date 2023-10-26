@@ -18,7 +18,6 @@ public class HibernateHelper extends HelperBase {
     public HibernateHelper(ApplicationManager manager) {
         super(manager);
         sessionFactory = new Configuration()
-//                        .addAnnotatedClass(Book.class)
                         .addAnnotatedClass(GroupRecord.class)
                         .addAnnotatedClass(ContactRecord.class)
                         .setProperty(AvailableSettings.URL, "jdbc:mysql://localhost/addressbook?zeroDateTimeBehavior=convertToNull")
@@ -27,7 +26,7 @@ public class HibernateHelper extends HelperBase {
                         .buildSessionFactory();
     }
 
-    static List<GroupData> convertList(List<GroupRecord> records) {
+    static List<GroupData> convertCroupList(List<GroupRecord> records) {
         List<GroupData> result = new ArrayList<>();
         for (var record : records) {
             result.add(convert(record));
@@ -48,7 +47,7 @@ public class HibernateHelper extends HelperBase {
     }
 
     public List<GroupData> getGroupList() {
-        return convertList(sessionFactory.fromSession(session -> {
+        return convertCroupList(sessionFactory.fromSession(session -> {
             return session.createQuery("from GroupRecord", GroupRecord.class).list();
         }));
     }

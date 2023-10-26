@@ -1,6 +1,8 @@
 package tests;
 
+import common.CommonFunction;
 import model.ContactData;
+import model.GroupData;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -33,6 +35,32 @@ public class ContactRemovalTests extends TestBase {
         }
         app.contacts().removeAllContact();
         Assertions.assertEquals(0, app.contacts().getCount());
+    }
+
+    @Test
+    void canRemoveContactFromGroup() {
+        if (app.hbm().getContactCount() == 0) {
+            var contact = new ContactData()
+                    .withFirstName(CommonFunction.randomString(10))
+                    .withLastName(CommonFunction.randomString(10))
+                    .withPhoto(randomFile("src/test/resources/images"));
+            if (app.hbm().getGroupCount() == 0) {
+                app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
+            }
+            var group = app.hbm().getGroupList().get(0);
+            app.contacts().createContact(contact, group);
+        }
+
+        var group = app.hbm().getGroupList().get(0);
+        var contact = app.hbm().getContactList().get(0);
+
+//        if (app.hbm().getContactsInGroup(group) == 0) {
+//            app.contacts().addContactToGroup(contact, group);
+//        }
+        var oldRelated = app.hbm().getContactsInGroup(group);
+        app.contacts().removeContact(contact, group);
+        var newRelated = app.hbm().getContactsInGroup(group);
+        Assertions.assertEquals(oldRelated.size(), newRelated.size());
     }
 
 }

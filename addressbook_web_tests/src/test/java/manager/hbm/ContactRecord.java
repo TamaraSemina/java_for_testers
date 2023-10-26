@@ -41,7 +41,7 @@ public class ContactRecord {
     public String phone2 = "";
     public String notes = "";
 
-    @Column(name = "photo")
+
     public String photo = "";
 
     @Column(name = "id")
@@ -53,7 +53,8 @@ public class ContactRecord {
     @Column(name = "address")
     public String address;
 
-    public ContactRecord() {    }
+    public ContactRecord() {
+    }
 
     public ContactRecord(int id, String firstname, String lastname, String address, String photo) {
         this.id = id;

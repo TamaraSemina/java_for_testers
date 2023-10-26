@@ -40,6 +40,38 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    public void removeContact(ContactData contact, GroupData group) {
+        openHomePage();
+        selectGroupFromList(group);
+        selectContact(contact);
+        removeSelectedContactFromGroup();
+        openHomePage();
+    }
+
+    private void removeSelectedContactFromGroup() {
+        click(By.xpath("//input[@name='remove']"));
+    }
+
+    private void selectGroupFromList(GroupData group) {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue(group.id());
+    }
+
+    public void addContactToGroup(ContactData contact, GroupData group) {
+        openHomePage();
+        selectContact(contact);
+        selectGroupFromListOnHome(group);
+        confirmAdditionContactToGroup();
+        openHomePage();
+    }
+
+    private void confirmAdditionContactToGroup() {
+        click(By.xpath("//input[@name='add']"));
+    }
+
+    private void selectGroupFromListOnHome(GroupData group) {
+        new Select(manager.driver.findElement(By.name("to_group"))).selectByValue(group.id());
+    }
+
     public void removeAllContact() {
         openHomePage();
         selectAllContact();
@@ -126,6 +158,7 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
+
 
     //        public List<ContactData> getList() {
 //        openHomePage();
