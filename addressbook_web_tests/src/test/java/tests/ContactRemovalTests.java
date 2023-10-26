@@ -54,11 +54,11 @@ public class ContactRemovalTests extends TestBase {
         var group = app.hbm().getGroupList().get(0);
         var contact = app.hbm().getContactList().get(0);
 
-//        if (app.hbm().getContactsInGroup(group) == 0) {
+//        if (app.hbm().getContactsInGroup(group) == null) {
 //            app.contacts().addContactToGroup(contact, group);
 //        }
         var oldRelated = app.hbm().getContactsInGroup(group);
-        app.contacts().removeContact(contact, group);
+        app.contacts().removeContactFromGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size(), newRelated.size());
     }
