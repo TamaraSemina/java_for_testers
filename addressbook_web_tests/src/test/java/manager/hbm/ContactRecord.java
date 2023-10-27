@@ -12,6 +12,11 @@ import java.util.Date;
 public class ContactRecord {
 
     @Id
+    public int id;
+    public String firstname;
+    public String lastname;
+    public String address;
+
     public String nickname = "";
     public String company = "";
     public String title = "";
@@ -19,9 +24,7 @@ public class ContactRecord {
     public String middlename = "";
     public String home = "";
     public String mobile = "";
-
     public String work = "";
-
     public String fax = "";
     public String email = "";
     public String email2 = "";
@@ -32,7 +35,6 @@ public class ContactRecord {
     public String homepage = "";
     public String bmonth = "";
     public int bday = 0;
-
     public String byear = "";
     public int aday = 0;
     public String amonth = "";
@@ -40,18 +42,8 @@ public class ContactRecord {
     public String address2 = "";
     public String phone2 = "";
     public String notes = "";
-
-
     public String photo = "";
 
-    @Column(name = "id")
-    public int id;
-    @Column(name = "firstname")
-    public String firstname;
-    @Column(name = "lastname")
-    public String lastname;
-    @Column(name = "address")
-    public String address;
 
     public ContactRecord() {
     }
