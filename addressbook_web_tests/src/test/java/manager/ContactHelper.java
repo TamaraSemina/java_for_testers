@@ -64,6 +64,15 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+    public void addContactToGroupNone(GroupData group) {
+        openHomePage();
+        selectContactNone();
+        selectGroupFromListOnHome(group);
+        selectAllContact();
+        confirmAdditionContactToGroup();
+        openHomePage();
+    }
+
     private void confirmAdditionContactToGroup() {
         click(By.xpath("//input[@name='add']"));
     }
@@ -115,6 +124,10 @@ public class ContactHelper extends HelperBase {
         click(By.cssSelector(String.format("input[value='%s']", contact.id())));
     }
 
+    private void selectContactNone() {
+        new Select(manager.driver.findElement(By.name("group"))).selectByValue("[none]");
+    }
+
     private void selectAllContact() {
         var checkboxes = manager.driver.findElements(By.name("selected[]"));
         for (var checkbox : checkboxes) {
@@ -158,18 +171,4 @@ public class ContactHelper extends HelperBase {
         }
         return contacts;
     }
-
-
-    //        public List<ContactData> getList() {
-//        openHomePage();
-//        var contacts = new ArrayList<ContactData>();
-//        var trs = manager.driver.findElements(By.xpath("//table[@class='sortcompletecallback-applyZebra']/tbody/tr[preceding-sibling::tr]"));
-//        for (var test : trs) {
-//            var name = test.getText();
-//            var checkbox = test.findElement(By.name("selected[]"));
-//            var id = checkbox.getAttribute("value");
-//            contacts.add(new ContactData().withId(id).withFirstName(name));
-//        }
-//        return contacts;
-//    }
 }

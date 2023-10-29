@@ -44,24 +44,25 @@ public class ContactRemovalTests extends TestBase {
                     .withFirstName(CommonFunction.randomString(10))
                     .withLastName(CommonFunction.randomString(10))
                     .withPhoto(randomFile("src/test/resources/images"));
-            if (app.hbm().getGroupCount() == 0) {
-                app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
-            }
-            var group = app.hbm().getGroupList().get(0);
-            app.contacts().createContact(contact, group);
+            app.contacts().createContact(contact);
+        }
+
+        if (app.hbm().getGroupCount() == 0) {
+            app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
 
         var group = app.hbm().getGroupList().get(0);
-        var contact = app.hbm().getContactList().get(0);
 
         if (app.hbm().getCountContactsInGroup() == 0) {
-            app.contacts().addContactToGroup(contact, group);
+            app.contacts().addContactToGroupNone(group);
         }
+
+        var contact = app.hbm().getContactList().get(0);
 
         var oldRelated = app.hbm().getContactsInGroup(group);
         app.contacts().removeContactFromGroup(contact, group);
         var newRelated = app.hbm().getContactsInGroup(group);
-        Assertions.assertEquals(oldRelated.size(), newRelated.size());
+        Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
 
 }
