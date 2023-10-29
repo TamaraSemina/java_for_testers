@@ -58,12 +58,13 @@ public class Generator {
     }
 
     private Object generateData(Supplier<Object> sataSupplier) {
-        Stream.generate(sataSupplier).limit(count).collect(Collectors.toList());
+        return Stream.generate(sataSupplier).limit(count).collect(Collectors.toList());
+    }
 //        var result = new ArrayList<Object>(); /* То же самое что выше в одну строку */
 //        for (int i = 0; i < count; i++) {}
 //        result.add(sataSupplier.get());
 //        return result;
-    }
+//    }
 
     private Object generatorGroups() {
         return generateData(() -> new GroupData()
