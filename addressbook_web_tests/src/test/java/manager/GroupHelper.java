@@ -2,6 +2,7 @@ package manager;
 
 import model.GroupData;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,10 +91,12 @@ public class GroupHelper extends HelperBase {
     }
 
     private void selectAllGroups() {
-        var checkboxes = manager.driver.findElements(By.name("selected[]"));
-        for (var checkbox : checkboxes) {
-            checkbox.click();
-        }
+//        checkboxes.forEach(checkbox -> checkbox.click()); /* То же самое, что ниже */
+//        checkboxes.forEach(WebElement::click);
+        manager.driver
+                .findElements(By.name("selected[]"))
+                .forEach(WebElement::click);
+
     }
 
     public int getCount() {
