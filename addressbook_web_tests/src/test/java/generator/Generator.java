@@ -14,6 +14,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Generator {
 
@@ -54,27 +57,38 @@ public class Generator {
         }
     }
 
+    private Object generateData(Supplier<Object> sataSupplier) {
+        Stream.generate(sataSupplier).limit(count).collect(Collectors.toList());
+//        var result = new ArrayList<Object>(); /* То же самое что выше в одну строку */
+//        for (int i = 0; i < count; i++) {}
+//        result.add(sataSupplier.get());
+//        return result;
+    }
+
     private Object generatorGroups() {
-        var result = new ArrayList<GroupData>();
-        for (int i = 0; i < count; i++) {
-            result.add(new GroupData()
-                    .withName(CommonFunction.randomString(i * 10))
-                    .withHeader(CommonFunction.randomString(i * 10))
-                    .withFooter(CommonFunction.randomString(i * 10)));
-        }
-        return result;
+        return generateData(() -> new GroupData()
+                .withName(CommonFunction.randomString(10))
+                .withHeader(CommonFunction.randomString(10))
+                .withFooter(CommonFunction.randomString(10)));
     }
 
     private Object generatorContact() {
-        var result = new ArrayList<ContactData>();
-        for (int i = 0; i < count; i++) {
-            result.add(new ContactData()
-                    .withFirstName(CommonFunction.randomString(i * 10))
-                    .withLastName(CommonFunction.randomString(i * 10))
-                    .withAddress(CommonFunction.randomString(i * 10)));
-        }
-        return result;
+        return generateData(() -> new ContactData()
+                .withFirstName(CommonFunction.randomString(10))
+                .withLastName(CommonFunction.randomString(10))
+                .withAddress(CommonFunction.randomString(10)));
     }
+
+//    private Object generatorContact() {
+//        var result = new ArrayList<ContactData>();
+//        for (int i = 0; i < count; i++) {
+//            result.add(new ContactData()
+//                    .withFirstName(CommonFunction.randomString(i * 10))
+//                    .withLastName(CommonFunction.randomString(i * 10))
+//                    .withAddress(CommonFunction.randomString(i * 10)));
+//        }
+//        return result;
+//    }
 
     private void save(Object data) throws IOException {
         if ("json".equals(format)) {
