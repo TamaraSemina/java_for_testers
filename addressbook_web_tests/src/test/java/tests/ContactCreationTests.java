@@ -130,7 +130,7 @@ public class ContactCreationTests extends TestBase {
 
     public static List<ContactData> negativeContactProvider() {
         var result = new ArrayList<ContactData>(List.of(
-                new ContactData("", "Imya'", "", "", "src/test/resources/images/avatar.jpg")));
+                new ContactData("", "Imya'", "", "", "src/test/resources/images/avatar.jpg", "", "", "", "")));
         return result;
     }
 }

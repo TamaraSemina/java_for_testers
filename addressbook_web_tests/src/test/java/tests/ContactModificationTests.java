@@ -14,7 +14,7 @@ public class ContactModificationTests extends TestBase {
     @Test
     void canModifyContact() {
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Imya", "Familia", "","src/test/resources/images/avatar.jpg"));
+            app.hbm().createContact(new ContactData("", "Imya", "Familia", "","src/test/resources/images/avatar.jpg", "", "", "", ""));
         }
         var oldContacts = app.hbm().getContactList();
 
@@ -47,7 +47,7 @@ public class ContactModificationTests extends TestBase {
         }
 
         if (app.hbm().getContactCount() == 0) {
-            app.hbm().createContact(new ContactData("", "Imya", "Familia", "", "src/test/resources/images/avatar.jpg"));
+            app.hbm().createContact(new ContactData("", "Imya", "Familia", "", "src/test/resources/images/avatar.jpg", "", "", "", ""));
         }
 
         var group = app.hbm().getGroupList().get(0);

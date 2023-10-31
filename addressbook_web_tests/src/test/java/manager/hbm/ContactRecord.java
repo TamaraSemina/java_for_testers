@@ -17,15 +17,20 @@ public class ContactRecord {
     public String lastname;
     public String address = "";
 
+    public String home;
+    public String mobile;
+    public String work;
+    public String phone2; /* secondary */
+
     public String middlename;
     public String nickname = "";
     public String company = "";
     public String title = "";
 
-    public String home = "";
-    public String mobile = "";
-
-    public String work = "";
+//    public String home = "";
+//    public String mobile = "";
+//
+//    public String work = "";
 
     public String fax = "";
     public String email = "";
@@ -43,7 +48,7 @@ public class ContactRecord {
     public String amonth = "";
     public String ayear = "";
     public String address2 = "";
-    public String phone2 = "";
+//    public String phone2 = "";
     public String notes = "";
 
     public String photo = "";
