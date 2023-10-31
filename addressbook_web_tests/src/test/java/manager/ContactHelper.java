@@ -189,4 +189,33 @@ public class ContactHelper extends HelperBase {
         }
         return result;
     }
+
+    public Object getEmails(ContactData contact) {
+        openHomePage();
+        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText();
+    }
+
+    public String getEmailsFromHomePage(ContactData contact) {
+        openHomePage();
+        return manager.driver.findElement(By.xpath(String.format("//input[@id='%s']/../../td[5]", contact.id()))).getText().replace("\n","");
+    }
+
+    public String getEmailsFromEditPage(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var email = manager.driver.findElement(By.name("email")).getAttribute("value");
+        var email2 = manager.driver.findElement(By.name("email2")).getAttribute("value");
+        var email3 = manager.driver.findElement(By.name("email3")).getAttribute("value");
+        var emails = email + email2 + email3;
+        return emails;
+    }
+
+    public String getAddressFromEditPage(ContactData contact) {
+        openHomePage();
+        initContactModification(contact);
+        var address = manager.driver.findElement(By.name("address")).getAttribute("value");
+        var address2 = manager.driver.findElement(By.name("address2")).getAttribute("value");
+        var addresses = address + address2;
+        return addresses;
+    }
 }

@@ -9,7 +9,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -50,7 +49,10 @@ public class HibernateHelper extends HelperBase {
         if ("".equals(id)) {
             id = "0";
         }
-        return new GroupRecord(Integer.parseInt(id), data.name(), data.header(), data.footer());
+        return new GroupRecord(Integer.parseInt(id),
+                data.name(),
+                data.header(),
+                data.footer());
     }
 
     public List<GroupData> getGroupList() {
@@ -94,7 +96,11 @@ public class HibernateHelper extends HelperBase {
                 .withHome(record.home)
                 .withMobile(record.mobile)
                 .withWork(record.work)
-                .withSecondary(record.phone2);
+                .withSecondary(record.phone2)
+                .withEmail(record.email)
+                .withEmail2(record.email2)
+                .withEmail3(record.email3)
+                .withAddress2(record.address2);
     }
 
     private static ContactRecord convertContact(ContactData contact) {
@@ -102,7 +108,19 @@ public class HibernateHelper extends HelperBase {
         if ("".equals(id)) {
             id = "0";
         }
-        return new ContactRecord(Integer.parseInt(id), contact.firstname(), contact.lastname(), contact.address(), contact.photo());
+        return new ContactRecord(Integer.parseInt(id),
+                contact.firstname(),
+                contact.lastname(),
+                contact.address(),
+                contact.photo(),
+                contact.home(),
+                contact.mobile(),
+                contact.work(),
+                contact.secondary(),
+                contact.address2(),
+                contact.email(),
+                contact.email2(),
+                contact.email3());
     }
 
     public List<ContactData> getContactList() {
