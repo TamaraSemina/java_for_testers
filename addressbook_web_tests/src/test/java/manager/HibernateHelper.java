@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AvailableSettings;
 import org.hibernate.cfg.Configuration;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 

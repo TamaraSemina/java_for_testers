@@ -76,6 +76,15 @@ public class ContactHelper extends HelperBase {
         openHomePage();
     }
 
+//    public void addOneContactToGroupNone(GroupData group) {
+//        openHomePage();
+//        selectContactNone();
+//        selectGroupFromListOnHome(group);
+//        selectContact2();
+//        confirmAdditionContactToGroup();
+//        openHomePage();
+//    }
+
     private void confirmAdditionContactToGroup() {
         click(By.xpath("//input[@name='add']"));
     }
@@ -171,6 +180,19 @@ public class ContactHelper extends HelperBase {
             var firstname = test.findElement(By.xpath("td[3]")).getText();
             var lastname = test.findElement(By.xpath("td[2]")).getText();
             contacts.add(new ContactData().withId(id).withFirstName(firstname).withLastName(lastname));
+        }
+        return contacts;
+    }
+
+    public List<ContactData> getList2() {
+        openHomePage();
+        selectContactNone();
+        var contacts = new ArrayList<ContactData>();
+        var trs = manager.driver.findElements(By.xpath("//tr[@name=\'entry\']"));
+        for (var test : trs) {
+            var checkbox = test.findElement(By.name("selected[]"));
+            var id = checkbox.getAttribute("value");
+            contacts.add(new ContactData().withId(id));
         }
         return contacts;
     }
