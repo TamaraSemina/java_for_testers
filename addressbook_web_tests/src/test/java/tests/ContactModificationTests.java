@@ -46,11 +46,9 @@ public class ContactModificationTests extends TestBase {
                     .withPhoto(randomFile("src/test/resources/images"));
             app.contacts().createContact(contact);
         }
-
         if (app.hbm().getGroupCount() == 0) {
             app.hbm().createGroup(new GroupData("", "group name", "group header", "group footer"));
         }
-
         if (app.hbm().getContactCount() == app.hbm().getCountContactsInGroup()) {
             var contact = new ContactData()
                     .withFirstName(CommonFunction.randomString(10))
@@ -59,22 +57,15 @@ public class ContactModificationTests extends TestBase {
             app.contacts().createContact(contact);
         }
 
-        var oldContacts = app.hbm().getContactList();
-        var contacts = app.contacts().getList2();
+        var oldContacts = app.hbm().getCountContactsInGroup();
+        var contacts = app.contacts().getListForContactWithoutGroup();
         var rnd = new Random();
         var index = rnd.nextInt(contacts.size());
-
         var group = app.hbm().getGroupList().get(0);
 
         app.contacts().addContactToGroup(contacts.get(index), group);
 
-        Comparator<ContactData> compareById = (o1, o2) -> {
-            return Integer.compare(Integer.parseInt(o1.id()), Integer.parseInt(o2.id()));
-        };
-
-        var newContacts = app.hbm().getContactList();
-        newContacts.sort(compareById);
-        oldContacts.sort(compareById);
-        Assertions.assertEquals(newContacts, oldContacts);
+        var newContacts = app.hbm().getCountContactsInGroup();
+        Assertions.assertEquals(newContacts, oldContacts + 1);
     }
 }

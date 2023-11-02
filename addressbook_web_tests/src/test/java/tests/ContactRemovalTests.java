@@ -64,5 +64,4 @@ public class ContactRemovalTests extends TestBase {
         var newRelated = app.hbm().getContactsInGroup(group);
         Assertions.assertEquals(oldRelated.size() - 1, newRelated.size());
     }
-
 }

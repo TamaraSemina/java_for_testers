@@ -184,7 +184,7 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-    public List<ContactData> getList2() {
+    public List<ContactData> getListForContactWithoutGroup() {
         openHomePage();
         selectContactNone();
         var contacts = new ArrayList<ContactData>();
