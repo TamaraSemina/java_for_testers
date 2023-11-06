@@ -1,18 +1,24 @@
 package ru.stqa.mantis.tests;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.stqa.mantis.common.CommonFunction;
 
 public class UserRegistrationTests extends TestBase {
 
     @Test
-    void canRegistrationUser(String username) {
+    void canRegistrationUser() {
+        var username = String.format(CommonFunction.randomString(8));
         var email = String.format("%s@localhost", username);
-        //создать пользователя (JamesHelper)
-        //заполнить форму (браузер)
-        // ждем поулчения письма (MailHelper)
-        //извлекаем ссылку из письма
-        //проходим по ссылки  и завершаем регитсрацию (браузер)
-        // проверить, что пользователь может залогиниться (HttpSessionHelper)
-        //
+
+        app.jamesCli().addUser(email, "password");
+        app.registration().fillFormRegistration(username, email);
+
+        var url = app.mail().extractUrl(email, "password");
+        app.registration().confirmRegistration(url, username, "password");
+
+        app.http().login(username, "password");
+        Assertions.assertTrue(app.http().isLoggedIn());
     }
 }
+

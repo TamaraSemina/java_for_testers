@@ -17,6 +17,7 @@ public class ApplicationManager {
     private HttpSessionHelper httpSessionHelper;
     private JamesCliHelper jamesCliHelper;
     private MailHelper mailHelper;
+    private RegistrationHelper registrationHelper;
 
     public void init(String browser, Properties properties) {
         this.string = browser;
@@ -33,7 +34,7 @@ public class ApplicationManager {
                 throw new IllegalArgumentException(String.format("Unknown browser %s", string));
             }
             Runtime.getRuntime().addShutdownHook(new Thread(driver::quit));
-            driver.get(properties.getProperty("web.baseURL"));
+            driver.get(properties.getProperty("web.baseUrl"));
             driver.manage().window().setSize(new Dimension(1936, 1048));
         }
         return driver;
@@ -65,6 +66,13 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+    public RegistrationHelper registration() {
+        if (registrationHelper == null) {
+            registrationHelper = new RegistrationHelper(this);
+        }
+        return registrationHelper;
     }
 
     public String property(String name) {

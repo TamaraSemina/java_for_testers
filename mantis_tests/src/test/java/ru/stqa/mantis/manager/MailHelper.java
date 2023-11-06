@@ -8,8 +8,7 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-
-import static java.lang.Thread.sleep;
+import java.util.regex.Pattern;
 
 public class MailHelper extends HelperBase {
 
@@ -50,6 +49,22 @@ public class MailHelper extends HelperBase {
             }
         }
         throw new RuntimeException("No mail");
+    }
+
+    public String extractUrl(String email, String password) {
+        {
+            var messages = receive(email, password, Duration.ofSeconds(60));
+            var text = messages.get(0).content();
+            var pattern = Pattern.compile("http://\\S*");
+            var matcher = pattern.matcher(text);
+            String url;
+            if (matcher.find()) {
+                url = text.substring(matcher.start(), matcher.end());
+                System.out.println(url);
+                return url;
+            }
+            return null;
+        }
     }
 
     private static Folder getInbox(String username, String password) {
