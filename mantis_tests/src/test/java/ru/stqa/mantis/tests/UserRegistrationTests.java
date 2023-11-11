@@ -1,11 +1,14 @@
 package ru.stqa.mantis.tests;
 
 import kotlin.ParameterName;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.mantis.common.CommonFunction;
+import ru.stqa.mantis.model.DeveloperMailUser;
 
 public class UserRegistrationTests extends TestBase {
+
 
     @Test
     void canRegistrationUser() {
