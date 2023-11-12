@@ -1,8 +1,12 @@
 package ru.stqa.mantis.tests;
 
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import ru.stqa.mantis.common.CommonFunction;
 import ru.stqa.mantis.model.DeveloperMailUser;
+
+import java.time.Duration;
 
 public class UserCreationTests extends TestBase {
     DeveloperMailUser user;
@@ -13,13 +17,15 @@ public class UserCreationTests extends TestBase {
         user = app.developerMail().addUser();
         var email = String.format("%s@developermail.com", user.name());
 
-//        app.registration().fillFormRegistration(username, email);
-//
-//        var url = app.mail().extractUrl(email, "password");
-//        app.registration().confirmRegistration(url, username, "password");
-//
-//        app.http().login(username, "password");
-//        Assertions.assertTrue(app.http().isLoggedIn());
+        app.registration().fillFormRegistration(user.name(), email);
+
+        var message = app.developerMail().receive(user, Duration.ofSeconds(60));
+        var url = CommonFunction.extractUrl2(message);
+
+        app.registration().confirmRegistration(url, user.name(), password);
+
+        app.http().login(user.name(), password);
+        Assertions.assertTrue(app.http().isLoggedIn());
     }
 
     @AfterEach
