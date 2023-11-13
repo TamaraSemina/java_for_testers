@@ -1,11 +1,9 @@
 package ru.stqa.mantis.tests;
 
-import kotlin.ParameterName;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.stqa.mantis.common.CommonFunction;
-import ru.stqa.mantis.model.DeveloperMailUser;
+import ru.stqa.mantis.model.MantisUserData;
 
 public class UserRegistrationTests extends TestBase {
 
@@ -26,17 +24,23 @@ public class UserRegistrationTests extends TestBase {
     }
 
     @Test
-    void canRegistrationUserViaJamesApiHelper() {
+    void canRegistrationUserViaJamesAndMantisApiHelper() {
         var username = String.format(CommonFunction.randomString(8));
         var email = String.format("%s@localhost", username);
+        var password = "password";
 
-        app.jamesApi().addUser(email, "password");
-        app.registration().fillFormRegistration(username, email);
+        app.jamesApi().addUser(email, password);
 
-        var url = app.mail().extractUrl(email, "password");
-        app.registration().confirmRegistration(url, username, "password");
+        app.rest().mantisAddUser(new MantisUserData()
+                .withUsername(username)
+                .withPassword(password)
+                .withRealName(username)
+                .withEmail(email));
 
-        app.http().login(username, "password");
+        var url = app.mail().extractUrl(email, password);
+        app.registration().confirmRegistration(url, username, password);
+
+        app.http().login(username, password);
         Assertions.assertTrue(app.http().isLoggedIn());
     }
 }
